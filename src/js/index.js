@@ -30,6 +30,7 @@ const controlSearch =  async () => {
         searchView.clearInput();
         searchView.clearResults();
         renderLoader(elements.searchRes);
+
         
         try{
             // 4) Search for recipes
@@ -75,6 +76,10 @@ const controlRecipe = async () => {
         // Prepare UI for changes
         recipeView.clearRecipe();
         renderLoader(elements.recipe);
+
+        // Highligh selected search item
+        if (state.search) {searchView.highlightSelected(id);}
+
         
         // Create new recipe obj
         state.recipe = new Recipe(id);
