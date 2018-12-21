@@ -5,7 +5,7 @@ export default class List {
         this.items = [];
     }
 
-    addItem (count, unit, ingredient) {
+    addItem(count, unit, ingredient) {
         const item = {
             id: uniqid(),
             count,
@@ -18,7 +18,7 @@ export default class List {
 
     deleteItem(id) {
         const index = this.items.findIndex(el => el.id === id);
-        this.items.splice(index, 1);
+               this.items.splice(index, 1);
     }
 
     updateCount(id, newCount) {
