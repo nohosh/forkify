@@ -7,6 +7,8 @@ import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
+
+
 /** Global state of the app 
  * - Search object
  * - Current recipe object 
@@ -125,6 +127,7 @@ const controlList = () => {
     });
 }
 
+
 // Handle delete and update list item events 
 elements.shopping.addEventListener('click', e => {
     const id = e.target.closest('.shopping__item').dataset.itemid;
@@ -143,6 +146,50 @@ elements.shopping.addEventListener('click', e => {
         state.list.updateCount(id, val);
     }
 });
+
+
+
+/**
+ *  LIKE CONTROLLER
+ */
+
+const controlLike = () => {
+    if (!state.likes) state.likes = new Likes();
+    const currentID = state.recipe.id;
+
+    // User has NOT yet liked current recipe
+    if (!state.likes.isLiked(currentID)) {
+        // Add like to the state
+            const newLike = state.likes.addLike(
+                currentID,
+                state.recipe.title,
+                state.recipe.author,
+                state.recipe.img
+            );
+        // Toggle the like button
+        
+
+        // Add like to UI list
+            console.log(state.likes);
+
+    // User HAS liked current recipe
+    } else {
+        // Remove like from the state
+            state.likes.deleteLike(currentID);
+
+        // Toggle the like button
+        
+
+        // Remove like from UI list
+            console.log(state.likes);
+    }
+    
+    
+};
+
+
+
+
 
 // Handling recipe button clicks
 elements.recipe.addEventListener('click', e => {
