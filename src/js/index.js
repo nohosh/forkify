@@ -5,7 +5,7 @@ import Likes from './models/Likes';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
-import * as likesViews from './views/likesView';
+import * as likesView from './views/likesView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
 
@@ -158,7 +158,7 @@ elements.shopping.addEventListener('click', e => {
  */
 //TESTING
 state.likes = new Likes();
-likesViews.toggleLikeMenu(state.likes.getNumLikes());
+likesView.toggleLikeMenu(state.likes.getNumLikes());
 
 const controlLike = () => {
     if (!state.likes) state.likes = new Likes();
@@ -174,10 +174,10 @@ const controlLike = () => {
                 state.recipe.img
             );
         // Toggle the like button
-        likesViews.toggleLikeBtn(true);
+        likesView.toggleLikeBtn(true);
 
         // Add like to UI list
-        likesViews.renderLike(newLike);
+        likesView.renderLike(newLike);
             
 
     // User HAS liked current recipe
@@ -186,18 +186,28 @@ const controlLike = () => {
             state.likes.deleteLike(currentID);
 
         // Toggle the like button
-            likesViews.toggleLikeBtn(false);
+            likesView.toggleLikeBtn(false);
 
         // Remove like from UI list
-            likesViews.deleteLike(currentID);
+            likesView.deleteLike(currentID);
     }
-    likesViews.toggleLikeMenu(state.likes.getNumLikes());
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
     
 };
 
+// Restore liked recipes on page load
+window.addEventListener('load', () => {
+    state.likes = new Likes();
+    
+    // Restore likes
+    state.likes.readStorage();
 
+    // Toggle like menu button
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
 
-
+    // Render the existing likes
+    state.likes.likes.forEach(like => likesView.renderLike(like));
+});
 
 // Handling recipe button clicks
 elements.recipe.addEventListener('click', e => {
